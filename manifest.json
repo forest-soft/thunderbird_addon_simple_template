@@ -1,19 +1,19 @@
 {
 	"manifest_version": 2,
 	"name": "Simple Template",
-	"version": "1.0",
+	"version": "1.1",
 	"default_locale": "en",
 	"description": "__MSG_extensionDescription__",
 
 	"applications": {
 		"gecko": {
-			"id": "addon_simple_template@forest-soft.net",
-            "strict_min_version": "102.0"
+			"id": "addon_simple_template@forest-soft.net"
 		}
 	},
 	
 	"icons": {
-		"48": "icons/icon-48.png"
+		"32": "icons/icon-32.png",
+		"64": "icons/icon-64.png"
 	},
 
     "background": {
