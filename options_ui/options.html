@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+	<form>
+		<style>
+			.remark_text {
+			}
+			textarea[name=template_body] {
+				width: 350px;
+				height: 300px;
+			}
+		</style>
+		
+		<h1><span class="option_label_basic_setting_title">@基本設定@</span></h1>
+		<span class="option_label_acount">@Acount@</span>：<select name="acount"></select><br>
+		<pre class="option_label_acount_remark remark_text">@説明文@</pre>
+		
+		<br>
+		
+		<textarea name="template_body"></textarea><br>
+		<pre class="option_label_template_body_remark remark_text">@説明文@</pre>
+		
+		<br>
+		
+		<button type="submit"><span class="option_label_save_button">@保存する@</span></button>
+	</form>
+	<script src="options.js"></script>
+	</body>
+</html>

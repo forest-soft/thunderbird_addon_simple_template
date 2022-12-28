@@ -1,0 +1,17 @@
+{
+	"manifest_version": 2,
+	"name": "addon_test",
+	"version": "1.0",
+	"default_locale": "en",
+    "background": {
+        "scripts": ["background.js"]
+    },
+	"options_ui": {
+		"page": "options_ui/options.html"
+	},
+	"permissions": [
+		"accountsRead",
+        "compose",
+		"storage"
+    ]
+}

@@ -1,0 +1,31 @@
+{
+	"extensionDescription": {
+		"message": "Double-click the image to save it. \nIf there is already a file with the same file name, the save dialog will open. Save the file with any name.",
+		"description": "Description of the extension."
+	},
+	"option_label_basic_setting_title": {
+		"message": "Basic setting"
+	},
+	"option_label_acount": {
+		"message": "Acount"
+	},
+	"from_id_common_label": {
+		"message": "Common"
+	},
+	
+	"option_label_save_button": {
+		"message": "save"
+	},
+	"option_label_save_complete": {
+		"message": "Saved!"
+	},
+	"option_label_save_error": {
+		"message": "Could not save"
+	},
+	"popup_download_start": {
+		"message": "Start download"
+	},
+	"popup_download_complete": {
+		"message": "Download completed!"
+	}
+}

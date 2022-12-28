@@ -1,0 +1,24 @@
+{
+	"extensionDescription": {
+		"message": "画像をダブルクリックして保存できるようになります。\n既に同じファイル名のファイルがある場合は保存ダイアログが開くので、任意の名前を付けて保存してください。",
+		"description": "Description of the extension."
+	},
+	"option_label_basic_setting_title": {
+		"message": "基本設定"
+	},
+	"option_label_acount": {
+		"message": "アカウント"
+	},
+	"from_id_common_label": {
+		"message": "共通"
+	},
+	"option_label_save_button": {
+		"message": "保存する"
+	},
+	"option_label_save_complete": {
+		"message": "保存しました！"
+	},
+	"option_label_save_error": {
+		"message": "保存できませんでした"
+	}
+}
