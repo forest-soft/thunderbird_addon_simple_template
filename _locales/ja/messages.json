@@ -1,6 +1,6 @@
 {
 	"extensionDescription": {
-		"message": "画像をダブルクリックして保存できるようになります。\n既に同じファイル名のファイルがある場合は保存ダイアログが開くので、任意の名前を付けて保存してください。",
+		"message": "アカウントごとのテンプレートを作成&自動挿入できるようになります。",
 		"description": "Description of the extension."
 	},
 	"option_label_basic_setting_title": {

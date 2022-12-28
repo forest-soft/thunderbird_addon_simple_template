@@ -1,6 +1,6 @@
 {
 	"extensionDescription": {
-		"message": "Double-click the image to save it. \nIf there is already a file with the same file name, the save dialog will open. Save the file with any name.",
+		"message": "You will be able to create and automatically insert templates for each account.",
 		"description": "Description of the extension."
 	},
 	"option_label_basic_setting_title": {
