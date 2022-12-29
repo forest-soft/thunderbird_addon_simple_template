@@ -1,10 +1,19 @@
 // 挿入するテンプレートを取得する。
 async function get_template_data(account_id) {
-	let storage_key = "acount_template_" + account_id;
-	let template_data = await browser.storage.local.get(storage_key);
-	let result = typeof template_data[storage_key] !== "undefined" ? template_data[storage_key] : "";
+	let storage_key_body = "acount_template_" + account_id;
+	let storage_key_is_html = "acount_template_is_html_" + account_id;
 	
-	result = result.replace(/(\r\n|\r|\n)/g, "<br>");
+	let template_data = await browser.storage.local.get([storage_key_body, storage_key_is_html]);
+	let result = typeof template_data[storage_key_body] !== "undefined" ? template_data[storage_key_body] : "";
+	let is_html = typeof template_data[storage_key_is_html] !== "undefined" ? template_data[storage_key_is_html] : false;
+	
+	if (!is_html) {
+		let escape_element = document.createElement("span");
+		escape_element.innerText = result;
+		result = escape_element.innerHTML;
+		result = result.replace(/(\r\n|\r|\n)/g, "<br>");
+	}
+	
 	return result;
 }
 

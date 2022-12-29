@@ -9,8 +9,17 @@
 	"option_label_acount": {
 		"message": "アカウント"
 	},
+	"option_label_acount_remark": {
+		"message": "アカウントを選んでテンプレートを設定した場合はアカウントごとの設定値が使われます。\r\nアカウントごとの設定値がない場合は「共通」の設定値が使われます。"
+	},
 	"from_id_common_label": {
 		"message": "共通"
+	},
+	"option_label_is_template_body_html": {
+		"message": "HTMLタグを有効にする"
+	},
+	"option_label_template_body_remark": {
+		"message": "HTMLタグを有効にした場合は改行を入れたい場所に「<br>」タグを入れてください。"
 	},
 	"option_label_save_button": {
 		"message": "保存する"

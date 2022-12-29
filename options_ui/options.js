@@ -8,16 +8,28 @@ for (var i = 0; i < label_list.length; i++) {
 	label_list[i].appendChild(document.createTextNode(browser.i18n.getMessage(class_name)));
 }
 
+function debug_check_storage_data() {
+	let getting = browser.storage.local.get();
+	getting.then(function(result){
+		console.log("ストレージデータ");
+		console.log(result);
+	}, function(error){
+		console.log(`Error: ${error}`);
+	});
+}
 
 let acount_element = document.querySelector("select[name=acount]");
 function init() {
 	// アカウント変更時の処理
 	acount_element.addEventListener("change", function(){
 		// 保存されてるテンプレートを入力欄に復元する。
-		let storage_key = "acount_template_" + this.value;
-		var getting = browser.storage.local.get(storage_key);
+		let storage_key_body = "acount_template_" + this.value;
+		let storage_key_is_html = "acount_template_is_html_" + this.value;
+		
+		let getting = browser.storage.local.get([storage_key_body, storage_key_is_html]);
 		getting.then(function(result){
-			document.querySelector("textarea[name=template_body]").value = typeof result[storage_key] !== "undefined" ? result[storage_key] : "";
+			document.querySelector("textarea[name=template_body]").value = typeof result[storage_key_body] !== "undefined" ? result[storage_key_body] : "";
+			document.querySelector("input[name=is_template_body_html]").checked = typeof result[storage_key_is_html] !== "undefined" ? result[storage_key_is_html] : false;
 		}, function(error){
 			console.log(`Error: ${error}`);
 		});
@@ -64,8 +76,10 @@ function init() {
 	
 	// アカウントが削除された場合は保存している設定値を消しつつアカウントの選択肢を作り直す。
 	browser.accounts.onDeleted.addListener(async (id, changedValues) => {
-		let storage_key = "acount_template_" + id;
-		await browser.storage.local.remove(storage_key);
+		let storage_key_body = "acount_template_" + id;
+		let storage_key_is_html = "acount_template_is_html_" + id;
+		await browser.storage.local.remove(storage_key_body);
+		await browser.storage.local.remove(storage_key_is_html);
 		
 		init_acount();
 	});
@@ -75,9 +89,11 @@ function init() {
 function saveOptions(e) {
 	e.preventDefault();
 	
-	let storage_key = "acount_template_" + acount_element.value;
+	let storage_key_body = "acount_template_" + acount_element.value;
+	let storage_key_is_html = "acount_template_is_html_" + acount_element.value;
 	browser.storage.local.set({
-		[storage_key]: document.querySelector("textarea[name=template_body]").value
+		[storage_key_body]: document.querySelector("textarea[name=template_body]").value,
+		[storage_key_is_html]: document.querySelector("input[name=is_template_body_html]").checked,
 	}).then(function(){
 		alert(browser.i18n.getMessage("option_label_save_complete"));
 	}, function(error){

@@ -9,10 +9,18 @@
 	"option_label_acount": {
 		"message": "Acount"
 	},
+	"option_label_acount_remark": {
+		"message": "If you select an account and set the template, the settings for each account will be used.\r\nIf there is no setting value for each account, the \"common\" setting value is used."
+	},
 	"from_id_common_label": {
 		"message": "Common"
 	},
-	
+	"option_label_is_template_body_html": {
+		"message": "Enable HTML tags"
+	},
+	"option_label_template_body_remark": {
+		"message": "If you enable HTML tags, put a \"<br>\" tag where you want a line break."
+	},
 	"option_label_save_button": {
 		"message": "save"
 	},
