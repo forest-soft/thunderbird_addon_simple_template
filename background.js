@@ -1,7 +1,7 @@
 // 挿入するテンプレートを取得する。
 async function get_template_data(account_id) {
-	let storage_key_body = "acount_template_" + account_id;
-	let storage_key_is_html = "acount_template_is_html_" + account_id;
+	let storage_key_body = "account_template_" + account_id;
+	let storage_key_is_html = "account_template_is_html_" + account_id;
 	
 	let template_data = await browser.storage.local.get([storage_key_body, storage_key_is_html]);
 	let result = typeof template_data[storage_key_body] !== "undefined" ? template_data[storage_key_body] : "";
