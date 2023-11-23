@@ -5,7 +5,16 @@ for (var i = 0; i < label_list.length; i++) {
 		label_list[i].removeChild(label_list[i].firstChild);
 	}
 	const class_name = label_list[i].className.split(" ")[0];
-	label_list[i].appendChild(document.createTextNode(browser.i18n.getMessage(class_name)));
+
+	// Split translation text into lines, then add <br> element to line for correct appearance.
+	var labeltextlines = browser.i18n.getMessage(class_name).replace(/(?:\r\n|\r|\n)/g, "\n").split("\n");
+	var j;
+	for (j = 0; j < (labeltextlines.length - 1); j++) {
+		label_list[i].appendChild(document.createTextNode(labeltextlines[j]));
+		label_list[i].appendChild(document.createElement('br'));
+	}
+	label_list[i].appendChild(document.createTextNode(labeltextlines[j]));
+
 }
 
 function debug_check_storage_data() {
