@@ -6,10 +6,10 @@
 	"option_label_basic_setting_title": {
 		"message": "Basic setting"
 	},
-	"option_label_acount": {
-		"message": "Acount"
+	"option_label_account": {
+		"message": "Account"
 	},
-	"option_label_acount_remark": {
+	"option_label_account_remark": {
 		"message": "If you select an account and set the template, the settings for each account will be used.\r\nIf there is no setting value for each account, the \"common\" setting value is used."
 	},
 	"from_id_common_label": {

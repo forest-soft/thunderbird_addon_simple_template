@@ -18,13 +18,13 @@ function debug_check_storage_data() {
 	});
 }
 
-let acount_element = document.querySelector("select[name=acount]");
+let account_element = document.querySelector("select[name=account]");
 function init() {
 	// アカウント変更時の処理
-	acount_element.addEventListener("change", function(){
+	account_element.addEventListener("change", function(){
 		// 保存されてるテンプレートを入力欄に復元する。
-		let storage_key_body = "acount_template_" + this.value;
-		let storage_key_is_html = "acount_template_is_html_" + this.value;
+		let storage_key_body = "account_template_" + this.value;
+		let storage_key_is_html = "account_template_is_html_" + this.value;
 		
 		let getting = browser.storage.local.get([storage_key_body, storage_key_is_html]);
 		getting.then(function(result){
@@ -35,53 +35,53 @@ function init() {
 		});
 	});
 	
-	async function init_acount() {
+	async function init_account() {
 		// アカウントの選択肢をいったん消す。
-		while (acount_element.firstChild) {
-			acount_element.removeChild(acount_element.firstChild);
+		while (account_element.firstChild) {
+			account_element.removeChild(account_element.firstChild);
 		}
 		
 		// 「共通」の選択肢を追加する。
 		let common_option_element = document.createElement("option");
 		common_option_element.value = "common";
 		common_option_element.innerText = browser.i18n.getMessage("from_id_common_label");
-		acount_element.appendChild(common_option_element);
+		account_element.appendChild(common_option_element);
 		
 		// 登録されているアカウントを選択肢に追加する。
-		let acount_list = await browser.accounts.list();
-		for (const acount_data of acount_list) {
-			if (acount_data.type == "none") {
+		let account_list = await browser.accounts.list();
+		for (const account_data of account_list) {
+			if (account_data.type == "none") {
 				continue;
 			}
 			let option_element = document.createElement("option");
-			option_element.value = acount_data.id;
-			option_element.innerText = acount_data.name;
-			acount_element.appendChild(option_element);
+			option_element.value = account_data.id;
+			option_element.innerText = account_data.name;
+			account_element.appendChild(option_element);
 		}
 		
 		const change = new Event("change");
-		acount_element.dispatchEvent(change);
+		account_element.dispatchEvent(change);
 	}
-	init_acount();
+	init_account();
 	
 	// アカウントが登録された場合はアカウントの選択肢を作り直す。
 	browser.accounts.onCreated.addListener(async (id, changedValues) => {
-		init_acount();
+		init_account();
 	});
 	
 	// アカウントが更新された場合はアカウントの選択肢を作り直す。
 	browser.accounts.onUpdated.addListener(async (id, changedValues) => {
-		init_acount();
+		init_account();
 	});
 	
 	// アカウントが削除された場合は保存している設定値を消しつつアカウントの選択肢を作り直す。
 	browser.accounts.onDeleted.addListener(async (id, changedValues) => {
-		let storage_key_body = "acount_template_" + id;
-		let storage_key_is_html = "acount_template_is_html_" + id;
+		let storage_key_body = "account_template_" + id;
+		let storage_key_is_html = "account_template_is_html_" + id;
 		await browser.storage.local.remove(storage_key_body);
 		await browser.storage.local.remove(storage_key_is_html);
 		
-		init_acount();
+		init_account();
 	});
 }
 
@@ -89,8 +89,8 @@ function init() {
 function saveOptions(e) {
 	e.preventDefault();
 	
-	let storage_key_body = "acount_template_" + acount_element.value;
-	let storage_key_is_html = "acount_template_is_html_" + acount_element.value;
+	let storage_key_body = "account_template_" + account_element.value;
+	let storage_key_is_html = "account_template_is_html_" + account_element.value;
 	browser.storage.local.set({
 		[storage_key_body]: document.querySelector("textarea[name=template_body]").value,
 		[storage_key_is_html]: document.querySelector("input[name=is_template_body_html]").checked,
