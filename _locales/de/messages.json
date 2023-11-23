@@ -1,0 +1,39 @@
+{
+	"extensionDescription": {
+		"message": "Ermöglicht die Einstellung von einfachen Textvorlagen für jedes Mailkonto.",
+		"description": "Beschreibung der Erweiterung"
+	},
+	"option_label_basic_setting_title": {
+		"message": "Einstellungen"
+	},
+	"option_label_account": {
+		"message": "Benutzerkonto"
+	},
+	"option_label_account_remark": {
+		"message": "Wenn ein Konto ausgewählt ist und eine Vorlage definiert wurde, wird diese Einstellung für dieses Konto verwendet.\r\nWenn keine gesonderte Einstellung vorgenommen wurde, wird die Vorlage aus der Einstellung \"Gemeinsam\" verwendet."
+	},
+	"from_id_common_label": {
+		"message": "Gemeinsam"
+	},
+	"option_label_is_template_body_html": {
+		"message": "Verwende HTML"
+	},
+	"option_label_template_body_remark": {
+		"message": "Bei der Verwendung von HTML müssen Zeilenumbrüche mit einem \"<br>\" Tag erzeugt werden."
+	},
+	"option_label_save_button": {
+		"message": "Speichern"
+	},
+	"option_label_save_complete": {
+		"message": "Gespeichert!"
+	},
+	"option_label_save_error": {
+		"message": "Speichern fehlgeschlagen"
+	},
+	"popup_download_start": {
+		"message": "Starte Download"
+	},
+	"popup_download_complete": {
+		"message": "Download fertig!"
+	}
+}
