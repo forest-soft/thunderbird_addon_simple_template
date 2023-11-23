@@ -6,10 +6,10 @@
 	"option_label_basic_setting_title": {
 		"message": "基本設定"
 	},
-	"option_label_acount": {
+	"option_label_account": {
 		"message": "アカウント"
 	},
-	"option_label_acount_remark": {
+	"option_label_account_remark": {
 		"message": "アカウントを選んでテンプレートを設定した場合はアカウントごとの設定値が使われます。\r\nアカウントごとの設定値がない場合は「共通」の設定値が使われます。"
 	},
 	"from_id_common_label": {
