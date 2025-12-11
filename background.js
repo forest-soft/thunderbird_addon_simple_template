@@ -8,9 +8,14 @@ async function get_template_data(account_id) {
 	let is_html = typeof template_data[storage_key_is_html] !== "undefined" ? template_data[storage_key_is_html] : false;
 	
 	if (!is_html) {
+		// HTMLとして意味のある記号をエスケープする。
 		let escape_element = document.createElement("span");
+		
+		// ※改行がbrタグに置き換わる。
 		escape_element.innerText = result;
 		result = escape_element.innerHTML;
+		
+		// おそらくこの処理は無くてもOKか？
 		result = result.replace(/(\r\n|\r|\n)/g, "<br>");
 	}
 	
@@ -30,7 +35,7 @@ async function set_tempalte(tab) {
 	console.log(compose_data.subject);
 	console.log(compose_data.body);
 	*/
-
+	
 	if (compose_data.type == "draft") {
 		// 下書きデータを再開した場合はテンプレートをセットしない。
 		return;
@@ -52,6 +57,11 @@ async function set_tempalte(tab) {
 		template = await get_template_data("common");
 	}
 	let body_parts = compose_data.body.split("<body>");
+	// Todo HTMLメールでbodyタグにstyle属性等が指定されてる場合に分割に失敗している。
+	/*
+	console.log("parts");
+	console.log(body_parts);
+	*/
 	
 	// 差出人を変更した際に未編集の古いテンプレートがある場合は取り除く。
 	if (typeof tab_template_history[tab.id] !== "undefined" && body_parts[1].indexOf(tab_template_history[tab.id]) === 0) {
@@ -72,7 +82,10 @@ async function set_tempalte(tab) {
 	
 	let new_body = body_parts.join("<body>");
 	
-	browser.compose.setComposeDetails(tab.id, {body: new_body});
+	// テンプレート付きの本文をメール作成画面にセットする。
+	// ※setComposeDetails関数でbodyだけセットするとIMEが効かなくなる。
+	compose_data.body = new_body;
+	browser.compose.setComposeDetails(tab.id, compose_data);
 	
 	tab_template_history[tab.id] = template;
 }
