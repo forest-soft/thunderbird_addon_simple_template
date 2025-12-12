@@ -56,8 +56,16 @@ async function set_tempalte(tab) {
 	if (template.length == 0) {
 		template = await get_template_data("common");
 	}
-	let body_parts = compose_data.body.split("<body>");
-	// Todo HTMLメールでbodyタグにstyle属性等が指定されてる場合に分割に失敗している。
+	
+	// 転送時にbodyタグにstyle属性が付くことがあるので、正規表現でbodyの開始タグを特定する。
+	let body_tag_open_match = compose_data.body.match(/<body.*?>/);
+	if (body_tag_open_match == null) {
+		// bodyタグが見つけられないのでテンプレートが挿入できない。(通常は無いハズ)
+		return;
+	}
+	
+	let body_tag_open = body_tag_open_match[0];
+	let body_parts = compose_data.body.split(body_tag_open);
 	/*
 	console.log("parts");
 	console.log(body_parts);
@@ -80,12 +88,21 @@ async function set_tempalte(tab) {
 	// 差出人変更時に末尾の改行がなぜか1個増えるので1個削除する。
 	body_parts[1] = body_parts[1].replace("<br><br></body></html>", "<br></body></html>");
 	
-	let new_body = body_parts.join("<body>");
+	let new_body = body_parts.join(body_tag_open);
+	
+	/*
+	console.log("テンプレート挿入後本文");
+	console.log(new_body);
+	*/
 	
 	// テンプレート付きの本文をメール作成画面にセットする。
 	// ※setComposeDetails関数でbodyだけセットするとIMEが効かなくなる。
 	compose_data.body = new_body;
 	browser.compose.setComposeDetails(tab.id, compose_data);
+	
+	// NGコード
+	// browser.compose.setComposeDetails(tab.id, {body: new_body});
+	
 	
 	tab_template_history[tab.id] = template;
 }
