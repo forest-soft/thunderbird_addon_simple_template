@@ -1,31 +1,28 @@
 {
 	"manifest_version": 2,
 	"name": "Simple Template",
-	"version": "1.2",
+	"version": "1.3",
 	"default_locale": "en",
 	"description": "__MSG_extensionDescription__",
-
 	"applications": {
 		"gecko": {
 			"id": "addon_simple_template@forest-soft.net",
 			"strict_min_version": "102.0"
 		}
 	},
-	
 	"icons": {
 		"32": "icons/icon-32.png",
 		"64": "icons/icon-64.png"
 	},
-
-    "background": {
-        "scripts": ["background.js"]
-    },
+	"background": {
+		"scripts": ["background.js"]
+	},
 	"options_ui": {
 		"page": "options_ui/options.html"
 	},
 	"permissions": [
 		"accountsRead",
-        "compose",
+		"compose",
 		"storage"
-    ]
+	]
 }
