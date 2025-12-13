@@ -26,8 +26,38 @@ async function get_template_data(account_id) {
 // 差出人変更時に以前挿入したテンプレートを消すために使う。
 let tab_template_history = {};
 
+
+function sleep(time) {
+ 	return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+
+// Thunderbird 143以降でsetComposeDetails実行時にインライン画像が消える現象の対策用の処理。
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1997519
+// ↑によるとimgタグを「<img src="mailbox://・・・」 → 「<img src="data:image/・・・」というように置き換える処理が走っているらしく、
+// この処理と並行してメール本文を書き換えてしまうとインライン画像が表示されなくなるっぽい？
+// imgタグの展開処理が終わるまで待てば良いらしいので、待機させる。
+// Thunderbird 148で対策されるっぽいが、しばらく待つことになるので対策を入れておく。
+async function wait_conversion_inline_image(tab_id) {
+	let compose_data;
+	let i = 0;
+	do {
+		compose_data = await browser.compose.getComposeDetails(tab_id);
+		
+		if (compose_data.body.includes('<img src="mailbox://') || compose_data.body.includes('<img src="imap://')) {
+			await sleep(100);
+		}
+		
+		i++;
+	} while(i < 10);
+}
+
 // テンプレート挿入処理
 async function set_tempalte(tab) {
+	// v143以降でインライン画像が消えてしまう現象の対策
+	await wait_conversion_inline_image(tab.id);
+	
+	
 	let compose_data = await browser.compose.getComposeDetails(tab.id);
 	/*
 	console.log("メールデータ");
