@@ -26,6 +26,8 @@ async function get_template_data(account_id) {
 // 差出人変更時に以前挿入したテンプレートを消すために使う。
 let tab_template_history = {};
 
+// タブごとのテンプレート挿入判定
+let tab_is_disable_template = {};
 
 function sleep(time) {
  	return new Promise((resolve) => setTimeout(resolve, time));
@@ -66,19 +68,42 @@ async function set_tempalte(tab) {
 	console.log(compose_data.body);
 	*/
 	
-	if (compose_data.type == "draft") {
-		// 下書きデータを再開した場合はテンプレートをセットしない。
-		return;
-	} else if (compose_data.type == "redirect") {
-		// リダイレクトの場合はそのままにしておいた方が良いのでテンプレートをセットしない。
-		return;
-	} else 	if (compose_data.type == "new" && compose_data.relatedMessageId != null) {
-		// 新規メッセージの作成時に元ネタがある場合はテンプレートをセットしない。
-		// 確認したパターンは以下のもの。
-		// ・既存のメールから「新しいメッセージとして編集」で呼び出された場合
-		// ・テンプレートファイルから呼び出された場合
+	
+	if (typeof tab_is_disable_template[tab.id] == "undefined") {
+		let is_disable_template = false;
+		
+		if (compose_data.type == "draft") {
+			// 下書きデータを再開した場合はテンプレートをセットしない。
+			is_disable_template = true;
+			
+		} else if (compose_data.type == "redirect") {
+			// リダイレクトの場合はそのままにしておいた方が良いのでテンプレートをセットしない。
+			is_disable_template = true;
+			
+		} else 	if (compose_data.type == "new") {
+			// 新規メッセージの作成時に元ネタがある場合はテンプレートをセットしない。
+			// 確認したパターンは以下のもの。
+			// ・既存のメールから「新しいメッセージとして編集」で呼び出された場合
+			// ・テンプレートファイルから呼び出された場合
+			
+			if (compose_data.relatedMessageId != null) {
+				// v115あたりは「relatedMessageId」に値が入って来ていたが、
+				// 新しいバージョンでは入ってこなくなっている。
+				is_disable_template = true;
+			} else if (typeof compose_data.isModified !== "undefined" && compose_data.isModified === false) {
+				// 新しいバージョンでは「isModified」が追加されて、
+				// 元ネタがある状態で新規作成した場合は「false」が設定されている様子。
+				is_disable_template = true;
+			}
+		}
+		
+		tab_is_disable_template[tab.id] = is_disable_template;
+	}
+	
+	if (tab_is_disable_template[tab.id]) {
 		return;
 	}
+	
 	
 	let from_identity_data = await browser.identities.get(compose_data.identityId);
 	
@@ -149,6 +174,7 @@ browser.tabs.onCreated.addListener(async (tab) => {
 // タブが閉じられた場合はそのタブ用のテンプレート履歴を削除する。
 browser.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
 	delete tab_template_history[tabId];
+	delete tab_is_disable_template[tabId];
 });
 
 // 差出人変更時のイベント
