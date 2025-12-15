@@ -79,13 +79,18 @@ async function set_tempalte(tab) {
 		} else if (compose_data.type == "redirect") {
 			// リダイレクトの場合はそのままにしておいた方が良いのでテンプレートをセットしない。
 			is_disable_template = true;
-			
+		
 		} else 	if (compose_data.type == "new") {
+			// 環境によってはうまく判定できず、まっさらな新規作成時にもテンプレートが挿入されなくなってしまったので、
+			// 新規作成の場合は常にテンプレートを挿入することにした。
+			null;
+			
+			// 以下廃止コード
+			/*
 			// 新規メッセージの作成時に元ネタがある場合はテンプレートをセットしない。
 			// 確認したパターンは以下のもの。
 			// ・既存のメールから「新しいメッセージとして編集」で呼び出された場合
 			// ・テンプレートファイルから呼び出された場合
-			
 			if (compose_data.relatedMessageId != null) {
 				// v115あたりは「relatedMessageId」に値が入って来ていたが、
 				// 新しいバージョンでは入ってこなくなっている。
@@ -93,8 +98,10 @@ async function set_tempalte(tab) {
 			} else if (typeof compose_data.isModified !== "undefined" && compose_data.isModified === false) {
 				// 新しいバージョンでは「isModified」が追加されて、
 				// 元ネタがある状態で新規作成した場合は「false」が設定されている様子。
+				// 追記：環境によってはそうでもなかったので、この判定だとミスる。
 				is_disable_template = true;
 			}
+			*/
 		}
 		
 		tab_is_disable_template[tab.id] = is_disable_template;

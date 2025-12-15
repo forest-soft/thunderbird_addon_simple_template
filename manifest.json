@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Simple Template",
-	"version": "1.4",
+	"version": "1.5",
 	"default_locale": "en",
 	"description": "__MSG_extensionDescription__",
 	"applications": {
